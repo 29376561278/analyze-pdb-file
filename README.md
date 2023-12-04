@@ -6,7 +6,7 @@
 
 ### 所需依赖
 
-`mmgui库`
+`mmgui库 https://github.com/sandin/mmgui.git`
 
 `pdbparse库`
 
