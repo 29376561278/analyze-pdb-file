@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mmgui demo</title>
+    <style>
+      html{
+        padding: 0px;
+        margin: 0px;
+        border: 1px solid #dfffefa9;
+      }
+      #head{
+        background-color: #f5f6f7;
+        height: 30px;
+
+      }
+      #left{
+        background-color:  #e0fff685;
+        width: 250px;
+        height: 495px;
+        
+      }
+      #concer{
+        background-color: #62e9f810;
+        margin-top: -495px;
+        /* margin-top: -800px; */
+        margin-left: 250px;
+        height: 755px;
+        width: 500;
+      }
+      #wenjian{
+        margin-top: 3px;
+        margin-left: 20px;
+      }
+      #pfile,#rawdata,#value{
+        padding-left: 30px;
+        padding-right: 200px;
+      }
+      #left2{
+        margin-top:-300px;
+        width: 250px;
+        height: 300px;
+        
+        background-color: #e5f9ff;
+      }
+      #shunxu{
+        width: 80px;
+        height: 700px;
+        background-color: #eaf0f077;
+        margin-left: 10px;
+        
+      }
+      #shiliu{
+        word-spacing:1px;
+        width: 400px;
+        height: 700px;
+        margin-top: -700px;
+        margin-left: 100px;
+        border: 1px solid #d4d7d6;
+      }
+      #yuanwen{
+      
+        width: 400px;
+        height: 700px;
+        margin-top: -702px;
+        margin-left: 500px;
+        border: 1px solid #cecece;
+      }
+      #two{
+        margin-top: 30px;
+        width: 250px;
+        height: 30px;
+        background-color: #cecece94;
+        border: 1px solid #cecece;
+
+      }
+      #one{
+        margin-top: 60px;
+        width: 250px;
+        height: 30px;
+        background-color: #cecece94;
+        border: 1px solid #cecece;
+
+      }
+      /* #names_id{
+        height: 50px;
+      } */
+    </style>
+</head>
+<body>
+<div id="head">
+<input type="button" value="📂打开文件" id="wenjian" onclick="open1()">
+</div>
+<div id="left">
+  <input type="button" id="one" value="第一个GUID" onclick="change(1)">
+<input type="button" id="two" value="第二个GUID" onclick="change(2)">
+
+</div> 
+<div id="concer"> 
+<table id="table">
+    <tbody id="tbody"><tr>
+      <th id="pfile">pfile</th>
+      <th id="rawdata">rawdata</th>
+      <th id="value">value </th>
+    </tr>
+  </tbody>
+</table>
+<div id="shunxu"></div>
+<div id="shiliu"  style=" display: flex;
+font-family: Verdana, Geneva, Tahoma, sans-serif;font-size:14px;"></div>
+<div id="yuanwen"></div>
+</div>
+</body>
+<div id="left2">
+  <form action="">
+    <br>
+    <label for="guid">GUID:&nbsp;&nbsp;</label>
+    <input type="text" id="guid_id" name="guid" style="background-color:#4ff"><br><br>
+
+    <label for="version">版本号:</label>
+    <input type="text" id="version_id" name="version" required style="background-color:#f20"><br><br>
+
+    <label for="timestamp">时间戳:</label>
+    <input type="text" id="timestamp_id" name="timestamp" required style="background-color:#79f"><br><br>
+
+    <label for="names">names:&nbsp;&nbsp;</label>
+    <input type="text" id="names_id" name="names" required style="background-color:#ea0"><br><br>
+
+    <label for="age">age :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+    <input type="text" id="age_id" name="age" required style="background-color:#cef"><br><br>
+
+  </form>
+   </div>
+</html>
+<script>
+  var file1 = ""
+  var file2 = ""
+  var file3 = ""
+  var file4 = ""
+  function change(num){
+    if(num == 2){
+      
+      var shunxu1 = math_length(file3)
+      document.getElementById("shunxu").innerHTML = shunxu1
+      document.getElementById("shiliu").innerHTML = file3
+      // color_num(file3)
+      document.getElementById("yuanwen").innerHTML = file4
+    }else{
+      
+      var shunxu1 = math_length(file1)
+      document.getElementById("shunxu").innerHTML = shunxu1
+      document.getElementById("shiliu").innerHTML = file1
+      // color_num(file1)
+      document.getElementById("yuanwen").innerHTML = file2
+    }
+
+  }
+  function open1(){
+    RPC.invoke("open_file", {"msg":"1"}).then((result) => {});
+    
+    window.addEventListener('message', (event) => {
+            var show_msg1 = event.data.msg
+            if (typeof(show_msg1) == "object"){
+              
+              var guid1 = show_msg1[0]
+              var Age1 = show_msg1[1]
+              var Version1 = show_msg1[2]
+              var TimeDateStamp1 = show_msg1[3]
+              var names1 = show_msg1[4]
+              document.getElementById("guid_id").value = guid1
+              document.getElementById("version_id").value = Version1
+              document.getElementById("timestamp_id").value = TimeDateStamp1
+              document.getElementById("names_id").value = names1
+              document.getElementById("age_id").value = Age1
+            }
+              if (show_msg1.slice(0,5) == "file1"){
+              file1 = show_msg1.slice(5,-1)
+              var shunxu1 = math_length(file1)
+              document.getElementById("shunxu").innerHTML = shunxu1 
+              document.getElementById("shiliu").innerHTML = show_msg1.slice(5,-1)
+              // color_num(file1)          
+            }
+            if(show_msg1.slice(0,5) == "error"){
+                document.getElementById("shiliu").innerHTML = show_msg1.slice(5,-1)
+                return
+              }
+            if (show_msg1.slice(0,5) == "file2"){
+              file2=show_msg1.slice(5,-1)
+              document.getElementById("yuanwen").innerHTML = show_msg1.slice(5,-1)
+            }
+     
+              if (show_msg1.slice(0,5) == "file3"){
+              file3 = show_msg1.slice(5,-1)
+              
+            }
+            if (show_msg1.slice(0,5) == "file4"){
+              file4=show_msg1.slice(5,-1)
+            }
+            
+
+        });
+       
+  }
+  function color_num(file_data){
+              change_color(0,32,"#f20")
+              change_color(75,107,"#79f")
+              change_color(162,194,"#cef")
+              change_color(237,387,"#4ff")
+              var endNum = 0
+              var num = file_data.substring(264,266)
+              if(num == 0x00){
+                return
+              }
+              var decimalNumber = parseInt(num,16)
+              var halfline = decimalNumber / 8
+              var line = Math.trunc(halfline / 2)
+              if(decimalNumber < 8){
+                  endNum = Math.trunc(decimalNumber * 8)
+              }else if(decimalNumber > 16){
+                if((halfline / 2) % 1 > 0.5){
+                  endNum = line * 4 + line * 6 * 4 + (decimalNumber -1) * 8 + 2 * 6
+                }else{
+                  endNum = line * 4 + line * 6 * 4 + (decimalNumber - 1) * 8 - 2 + 2
+                }
+                
+              }else{
+                endNum = decimalNumber * 8 + 6
+              }
+              // alert(438+endNum)
+              change_color(484,484+endNum,"#ea0")
+  }
+  function change_color(start,end,color){
+          var met = document.getElementById("shiliu")
+          
+              let textBefore = met.innerHTML.slice(0, start);
+              let textSelected = met.innerHTML.slice(start, end);
+              let textAfter = met.innerHTML.slice(end);
+              met.innerHTML = textBefore + '<span style="background-color:'+color+'">'+  textSelected + '</span>' + textAfter;
+        }
+  function math_length(file1){
+    var num = "";
+    var lang1 = parseInt(file1.length / 132)
+
+    for(i = 0; i<=lang1;i++){
+      num+=i.toString(16).padStart(8,"0")+"h:"+"<br>"
+    }
+      return num
+  }
+</script>
