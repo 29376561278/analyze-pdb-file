@@ -1,0 +1,11 @@
+{
+    "name": "Pdbparse",
+    "entry_point": "app:main",
+    "venv": "./venv",
+    "gui": true,
+    "include" : [
+        "app.py",
+        "__init__.py",
+        "ui"
+    ]
+}
