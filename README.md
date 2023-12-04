@@ -8,7 +8,7 @@
 
 `mmgui库 https://github.com/sandin/mmgui.git`
 
-`pdbparse库`
+`pdbparse库 https://github.com/moyix/pdbparse.git`
 
 cmd_get_pdb_info是单独的一个文件。使用命令行传入pdb文件。它不需要`mmgui`库。
 
