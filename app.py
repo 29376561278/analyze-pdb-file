@@ -90,7 +90,7 @@ def on_create(ctx):
         "title": "CtlCode",
         "width": 1200,
         "height": 805,
-        "dev_mode": True,
+        "dev_mode": False,
     })
 
     win.webview.load_file(os.path.join(os.path.dirname(os.path.abspath(__file__)), "ui", "index.html"))
