@@ -14,5 +14,5 @@ cmd_get_pdb_info是单独的一个文件。使用命令行传入pdb文件。它�
 
 ### 注：
 
-##### `pdbparse库只能从git库下载`，（代码稍丑，勿怪
+##### `pdbparse库只能从git库下载`
 
