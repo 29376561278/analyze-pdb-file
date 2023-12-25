@@ -104,11 +104,14 @@
       <th id="rawdata">rawdata</th>
       <th id="value">value </th>
     </tr>
+    <tr>
+
+    </tr>
   </tbody>
 </table>
 <div id="shunxu"></div>
-<div id="shiliu"  style=" display: flex;
-font-family: Verdana, Geneva, Tahoma, sans-serif;font-size:14px;"></div>
+<div id="shiliu" style="
+font-family: JetBrains Mono, monospace;font-size:13px;"></div>
 <div id="yuanwen"></div>
 </div>
 </body>
@@ -144,14 +147,14 @@ font-family: Verdana, Geneva, Tahoma, sans-serif;font-size:14px;"></div>
       var shunxu1 = math_length(file3)
       document.getElementById("shunxu").innerHTML = shunxu1
       document.getElementById("shiliu").innerHTML = file3
-      // color_num(file3)
+      color_num(file3)
       document.getElementById("yuanwen").innerHTML = file4
     }else{
       
       var shunxu1 = math_length(file1)
       document.getElementById("shunxu").innerHTML = shunxu1
       document.getElementById("shiliu").innerHTML = file1
-      // color_num(file1)
+      color_num(file1)
       document.getElementById("yuanwen").innerHTML = file2
     }
 
@@ -179,7 +182,7 @@ font-family: Verdana, Geneva, Tahoma, sans-serif;font-size:14px;"></div>
               var shunxu1 = math_length(file1)
               document.getElementById("shunxu").innerHTML = shunxu1 
               document.getElementById("shiliu").innerHTML = show_msg1.slice(5,-1)
-              // color_num(file1)          
+              color_num(file1)          
             }
             if(show_msg1.slice(0,5) == "error"){
                 document.getElementById("shiliu").innerHTML = show_msg1.slice(5,-1)
@@ -205,30 +208,33 @@ font-family: Verdana, Geneva, Tahoma, sans-serif;font-size:14px;"></div>
   function color_num(file_data){
               change_color(0,32,"#f20")
               change_color(75,107,"#79f")
-              change_color(162,194,"#cef")
-              change_color(237,387,"#4ff")
+              change_color(150,166,"#cef")
+              change_color(225,357,"#4ff")
+              change_color(400,402,"#cef")
               var endNum = 0
-              var num = file_data.substring(264,266)
+              var num = file_data.substring(228,230)
               if(num == 0x00){
                 return
               }
-              var decimalNumber = parseInt(num,16)
-              var halfline = decimalNumber / 8
-              var line = Math.trunc(halfline / 2)
-              if(decimalNumber < 8){
-                  endNum = Math.trunc(decimalNumber * 8)
-              }else if(decimalNumber > 16){
-                if((halfline / 2) % 1 > 0.5){
-                  endNum = line * 4 + line * 6 * 4 + (decimalNumber -1) * 8 + 2 * 6
-                }else{
-                  endNum = line * 4 + line * 6 * 4 + (decimalNumber - 1) * 8 - 2 + 2
-                }
+              var decimalNumber = (parseInt(num,16) - 1) * 2
+              var cell_num = decimalNumber / 8 //15
+              var halfline = decimalNumber / 8 /2 //7.5
+              var line = Math.trunc(halfline / 2) // 15
+              // if(decimalNumber < 8){
+              //     endNum = Math.trunc(decimalNumber * 8)
+              // }else if(decimalNumber > 16){
+              //   if((halfline / 2) % 1 > 0.5){
+              //     endNum = line * 4 + line * 6 * 4 + (decimalNumber -1) * 8 + 2 * 6
+              //   }else{
+              //     endNum = line * 4 + line * 6 * 4 + (decimalNumber - 1) * 8 - 2 + 2
+              //   }
                 
-              }else{
-                endNum = decimalNumber * 8 + 6
-              }
+              // }else{
+              //   endNum = decimalNumber * 8 + 6
+              // }
               // alert(438+endNum)
-              change_color(484,484+endNum,"#ea0")
+              endNum = line * 4 + cell_num * 8 * 4
+              change_color(479,479+endNum,"#ea0")
   }
   function change_color(start,end,color){
           var met = document.getElementById("shiliu")
